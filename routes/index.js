@@ -17,6 +17,12 @@ router.get('/login', userController.login_get);
 /* POST login page. */
 router.post('/login',userController.login_post);
 
+/* GET join page. */
+router.get('/join', userController.join_get);
+
+/* POST join page. */
+router.post('/join',userController.join_post);
+
 // LOGOUT PAGE
 router.get("/logout", userController.logout);
 

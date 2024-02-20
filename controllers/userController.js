@@ -10,7 +10,7 @@ const bcrypt = require('bcryptjs')
 exports.index = asyncHandler(async (req, res, next) => {
     // Get all messges from DB
     const allMessages = "TODO: Fetch ALL MESSAGES FROM DB"
-    res.render("index", {allMessages, user: req.user}); //user is attached as cookie! 
+    res.render("index", {allMessages}); //user is attached to request
 })
 
 // REGISTER
@@ -55,11 +55,24 @@ exports.register_post = [
 // LOG IN
 exports.login_get = (req, res, next) => res.render('login')
 exports.login_post = [
-    // TODO: Validate and sanitize input
-    passport.authenticate("local", {
-        successRedirect: "/sucess",
-        failureRedirect: "/fail"
-    })
+    body("username", "Username must contain at least 2 characters").trim().isLength({ min: 2 }).escape(),
+    body("password").escape(),
+
+
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()){
+            // There are errors with login form. Re-render it again
+            res.render('login', {errors: errors.array()}); 
+        }else{
+            // Form data is valid, attempt to authenticate the user
+            passport.authenticate("local", {
+                successRedirect: "/",
+                failureRedirect: "/login",
+                failureMessage: true
+            })(req,res,next)
+        }
+    },
 ]
 
 // LOG OUT
@@ -71,3 +84,38 @@ exports.logout = (req, res, next) => {
       res.redirect("/");
     });
 };
+
+// JOIN
+exports.join_get = (req, res, next) => {
+    res.render('join');
+}
+
+
+
+exports.join_post = [
+    body("secretCode", "SecretCode must contain at least 2 characters").trim().isLength({ min: 2 }).escape(),
+
+    asyncHandler (async (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()){
+            // There are errors with join form. Re-render it again
+            res.render('join', {errors: errors.array()}); 
+        }else{
+            // Form data is valid, verify secret code and update user DB
+            if (req.body.secretCode == process.env.SECRET_CODE){
+                // Update DB
+                // Create a new users object
+                const user = new User({
+                    name: req.user.name,
+                    username: req.user.username,
+                    password: req.user.password,
+                    memberType: "member",
+                    _id: req.user._id
+                })
+                await User.findByIdAndUpdate(req.user.id, user, {});
+                
+            }
+            res.redirect('/');
+        }
+    }),
+]

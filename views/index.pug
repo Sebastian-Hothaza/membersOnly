@@ -1,11 +1,13 @@
 extends layout
 
 block content
-  if (user === undefined) 
+  if (currentUser === undefined) 
     h1 Welcome to the Messageboard! 
+    p You must sign in to make a post.
   else 
-    h1 Welcome !{user.username}!
+    h1 Welcome !{currentUser.name.first_name}, !{currentUser.name.last_name} (!{currentUser.username})! 
+    
 
-  p You must sign in to make a post.
+  
   ul All mesages
     li !{allMessages}

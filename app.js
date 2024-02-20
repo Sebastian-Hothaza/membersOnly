@@ -4,22 +4,24 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
-
+const session = require("express-session");
+const passport = require("passport");
+const initalizePassport = require('./passport-config')
 
 const indexRouter = require('./routes/index');
 
 const app = express();
 
 // Passport setup
-const session = require("express-session");
-const passport = require("passport");
-const initalizePassport = require('./passport-config')
-
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
 initalizePassport.initialize(passport);
-
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
 
 
 // Set up mongoose connection
@@ -40,16 +42,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', indexRouter);
-
-
-
-// If you insert this code somewhere between where you instantiate the passport middleware and before you render your views,
-// you will have access to the currentUser variable in all of your views, and you won’t have to manually pass it into all of the controllers in which you need it.
-// app.use((req, res, next) => {
-//   res.locals.currentUser = req.user;
-//   next();
-// });
 
 
 // catch 404 and forward to error handler

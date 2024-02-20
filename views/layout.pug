@@ -16,12 +16,21 @@ html(lang='en')
             ul(class='sidebar-nav')
               li
                 a(href='/') Home
-              li
-                a(href='/login') Log In
-              li
-                a(href='/register') Register
-              li
-                a(href='/logout') Log Out
+              if (currentUser === undefined)
+                li
+                  a(href='/login') Log In
+                li
+                  a(href='/register') Register
+              else 
+                li
+                  a(href='/post') Post a Message
+                li
+                  a(href='/join') Become a Member
+                li
+                  a(href='/logout') Log Out
+              
+              
+                
 
         div(class='col-sm-10')
           block content
