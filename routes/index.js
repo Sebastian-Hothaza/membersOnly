@@ -33,4 +33,7 @@ router.get('/post', messageController.post_get);
 // Make a post 
 router.post('/post', messageController.post_post);
 
+// DELETE a post
+router.post('/delete', messageController.post_delete);
+
 module.exports = router;

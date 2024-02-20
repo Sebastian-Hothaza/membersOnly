@@ -40,7 +40,7 @@ exports.register_post = [
             }else{
                 // Form data is valid
                 await user.save();
-                res.redirect('/')
+                res.redirect('/login')
             }
         })
     })
@@ -84,7 +84,6 @@ exports.logout = (req, res, next) => {
 exports.join_get = (req, res, next) => {
     res.render('join');
 }
-
 
 
 exports.join_post = [

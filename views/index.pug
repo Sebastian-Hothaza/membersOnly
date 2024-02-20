@@ -5,7 +5,7 @@ block content
     h1 Welcome to the Messageboard! 
     p You must sign in to make a post.
   else 
-    h1 Welcome !{currentUser.name.first_name}, !{currentUser.name.last_name} (!{currentUser.username})! 
+    h1 Welcome !{currentUser.username}! 
     
   ul All mesages
     
@@ -20,5 +20,10 @@ block content
             div #[em Author: !{message.author.username}]
            
           if (currentUser && currentUser.memberType === "admin")
-            button#delete Delete Post
+            form(action='/delete', method='POST')
+              input(type=text, name="messageID", value=message.id, hidden=true)
+              button.btn.btn-primary(type='submit') Delete Post
+        
+      
+      
         
