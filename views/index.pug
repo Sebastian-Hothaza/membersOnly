@@ -7,7 +7,18 @@ block content
   else 
     h1 Welcome !{currentUser.name.first_name}, !{currentUser.name.last_name} (!{currentUser.username})! 
     
-
-  
   ul All mesages
-    li !{allMessages}
+    
+    for message in allMessages 
+      div.msgCard
+        div.msgCardHeader
+          div #[strong !{message.title}]
+          div !{message.timestamp_formatted}
+        div !{message.message}
+        if (currentUser)
+          if (currentUser.memberType === "member" || currentUser.memberType === "admin")
+            div #[em Author: !{message.author.username}]
+           
+          if (currentUser && currentUser.memberType === "admin")
+            button#delete Delete Post
+        

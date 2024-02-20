@@ -6,12 +6,7 @@ const passport = require("passport");
 const bcrypt = require('bcryptjs')
 
 
-// HOMEPAGE
-exports.index = asyncHandler(async (req, res, next) => {
-    // Get all messges from DB
-    const allMessages = "TODO: Fetch ALL MESSAGES FROM DB"
-    res.render("index", {allMessages}); //user is attached to request
-})
+
 
 // REGISTER
 exports.register_get = (req, res, next) => res.render('register')

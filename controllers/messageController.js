@@ -3,6 +3,13 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 
+// HOMEPAGE
+exports.index = asyncHandler(async (req, res, next) => {
+    // Get all messges from DB
+    const allMessages = await Message.find().populate("author").sort({timestamp: -1}).exec();
+    res.render("index", {allMessages}); 
+})
+
 exports.post_get = (req, res, next) => res.render('post')
 
 exports.post_post = [

@@ -4,7 +4,7 @@ const userController = require('../controllers/userController')
 const messageController = require('../controllers/messageController')
 
 /* GET home page. */
-router.get('/', userController.index);
+router.get('/', messageController.index);
 
 /* GET register page. */
 router.get('/register', userController.register_get);

@@ -12,3 +12,17 @@ a {
   padding: 0;
   list-style: none;
 }
+
+.msgCard{
+  margin-top: 2em;
+  gap: 2em;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding: .5em;
+}
+
+.msgCardHeader{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  border-bottom: solid black 1px;
+}

@@ -25,7 +25,7 @@ html(lang='en')
                 
                 li
                   a(href='/post') Post a Message
-                if (currentUser.memberType !== "member")
+                if (currentUser.memberType === "regular" )
                   li
                     a(href='/join') Become a Member
                 li
