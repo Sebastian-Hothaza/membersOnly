@@ -4,9 +4,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 require('dotenv').config();
-const LocalStrategy = require("passport-local").Strategy;
-const bcrypt = require('bcryptjs')
-const User=require('./models/user')
 
 
 const indexRouter = require('./routes/index');
@@ -16,40 +13,10 @@ const app = express();
 // Passport setup
 const session = require("express-session");
 const passport = require("passport");
-//const initalizePassport = require('./passport-config')
+const initalizePassport = require('./passport-config')
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-//initalizePassport.initialize(passport);
-passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    console.log("LOCAL STRATEGY RUNNING")
-    try {
-      const user = await User.findOne({ username: username });
-      if (!user) {
-        return done(null, false, { message: "Incorrect username" });
-      };
-      const match = await bcrypt.compare(password, user.password);
-      if (!match) return done(null, false, { message: "Incorrect password" });
-      
-      return done(null, user);
-    } catch(err) {
-      return done(err);
-    };
-  })
-);
-
-passport.serializeUser((user, done) => {
-    done(null, user.id);
-});
-  
-passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await User.findById(id);
-      done(null, user);
-    } catch(err) {
-      done(err);
-    };
-});
+initalizePassport.initialize(passport);
 
 app.use(passport.initialize());
 app.use(passport.session());
