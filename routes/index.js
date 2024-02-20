@@ -15,6 +15,9 @@ router.post('/register',userController.register_post)
 router.get('/login', userController.login_get);
 
 /* POST login page. */
-router.post('/login',userController.login_post) 
+router.post('/login',userController.login_post);
+
+// LOGOUT PAGE
+router.get("/logout", userController.logout);
 
 module.exports = router;
