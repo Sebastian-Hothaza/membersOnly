@@ -56,12 +56,10 @@ exports.register_post = [
 exports.login_get = (req, res, next) => res.render('login')
 exports.login_post = [
     // TODO: Validate and sanitize input
-    (req, res, next) => {
-        passport.authenticate("local", {
-            successRedirect: "/",
-            failureRedirect: "/logind"
-        })(req, res, next)
-    }
+    passport.authenticate("local", {
+        successRedirect: "/sucess",
+        failureRedirect: "/fail"
+    })
 ]
 
 // LOG OUT
