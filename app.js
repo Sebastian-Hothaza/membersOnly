@@ -15,8 +15,8 @@ const session = require("express-session");
 const passport = require("passport");
 const initalizePassport = require('./passport-config')
 
-initalizePassport.initialize(passport);
 app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+initalizePassport.initialize(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
