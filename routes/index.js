@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController')
+const messageController = require('../controllers/messageController')
 
 /* GET home page. */
 router.get('/', userController.index);
@@ -25,5 +26,11 @@ router.post('/join',userController.join_post);
 
 // LOGOUT PAGE
 router.get("/logout", userController.logout);
+
+// Make a post 
+router.get('/post', messageController.post_get);
+
+// Make a post 
+router.post('/post', messageController.post_post);
 
 module.exports = router;

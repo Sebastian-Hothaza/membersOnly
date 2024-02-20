@@ -22,10 +22,12 @@ html(lang='en')
                 li
                   a(href='/register') Register
               else 
+                
                 li
                   a(href='/post') Post a Message
-                li
-                  a(href='/join') Become a Member
+                if (currentUser.memberType !== "member")
+                  li
+                    a(href='/join') Become a Member
                 li
                   a(href='/logout') Log Out
               
